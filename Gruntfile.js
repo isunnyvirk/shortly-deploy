@@ -30,16 +30,31 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      target: {
+        files: {
+          'public/dist/<%= pkg.name %>.min.js': ['public/client/*.js']
+        }
+      }
     },
 
     eslint: {
       target: [
         // Add list of files to lint here
+        'public/dist/shortly-deploy.min.js', 'server.js', 'server-config.js'
       ]
     },
 
     cssmin: {
         // Add list of files to lint here
+      target: {
+        files: [{
+          expand: true, 
+          cwd: 'public',
+          src: ['*.css', '!*.min.css'],
+          dest: 'public/dist',
+          ext: '.min.css'
+        }]
+      }
     },
 
     watch: {
@@ -87,6 +102,7 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build', [
+    'concat', 'uglify', 'cssmin', 'eslint', 'mochaTest'
   ]);
 
   grunt.registerTask('upload', function(n) {
@@ -98,7 +114,8 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('deploy', [
-      // add your production server task here
+    // add your production server task here
+    'build', 'upload'
   ]);
 
 
