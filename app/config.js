@@ -1,3 +1,26 @@
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/test');
+var Schema = mongoose.Schema; 
+
+var linkSchema = new Schema({
+  url: {type: String, unique: true},
+  baseUrl: String,
+  code: String,
+  title: String,
+  visits: Number,
+},
+{ timestamps: { createdAt: 'created_at'}
+});
+
+var userSchema = new Schema({
+  username: {type: String, unique: true},
+  password: String,
+},
+{ timestamps: { createdAt: 'created_at'}
+});
+
+exports.linkSchema = linkSchema; 
+exports.userSchema = userSchema; 
 // var path = require('path');
 // var knex = require('knex')({
 //   client: 'sqlite3',
@@ -39,31 +62,3 @@
 
 // module.exports = db;
 
-// Im sunny;
-
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
-var Schema = mongoose.Schema; 
-
-var linkSchema = new Schema({
-  url: {type: String, unique: true},
-  baseUrl: String,
-  code: String,
-  title: String,
-  visits: Number,
-},
-{ timestamps: { createdAt: 'created_at'}
-});
-
-var userSchema = new Schema({
-  username: {type: String, unique: true},
-  password: String,
-},
-{ timestamps: { createdAt: 'created_at'}
-});
-
-
-var User = mongoose.model('User', userSchema);
-
-exports.linkSchema = linkSchema; 
-exports.User = User;

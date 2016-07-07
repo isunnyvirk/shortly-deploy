@@ -1,8 +1,10 @@
-// var db = require('../config');
 var User = require('../config').User;
 var bcrypt = require('bcrypt-nodejs');
+var mongoose = require('mongoose');
+var userSchema = require('../config').userSchema;
 var Promise = require('bluebird');
 
+var User = mongoose.model('User', userSchema);
 // var User = db.Model.extend({
 //   tableName: 'users',
 //   hasTimestamps: true,
@@ -22,5 +24,19 @@ var Promise = require('bluebird');
 //       });
 //   }
 // });
+// 
+
+userSchema.pre('save', function(next) {
+  var cipher = Promise.promisify(bcrypt.hash);
+  return cipher(this.password, null, null).bind(this)
+    .then(function(hash) {
+      this.password = hash;
+      next();
+    });
+});
+
+
+
+
 
 module.exports = User;
