@@ -15,6 +15,8 @@ var User = require('../app/models/user');
 var Link = require('../app/models/link');
 describe('', function() {
 
+  this.timeout(5000);
+
   beforeEach(function(done) {
     // Log out currently signed in user
     request(app)
@@ -207,7 +209,7 @@ describe('', function() {
 
   }); // 'Account Creation'
 
-  xdescribe('Account Login:', function() {
+  describe('Account Login:', function() {
 
     beforeEach(function(done) {
       new User({
