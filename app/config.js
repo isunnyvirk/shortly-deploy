@@ -7,7 +7,7 @@ var linkSchema = new Schema({
   baseUrl: String,
   code: String,
   title: String,
-  visits: Number,
+  visits: {type: Number, default: 0 }
 },
 { timestamps: { createdAt: 'created_at'}
 });
